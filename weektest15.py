@@ -3,8 +3,8 @@ import streamlit.components.v1 as components
 
 # Page configuration
 st.set_page_config(
-    page_title="Week Verdeler",
-    page_icon="📅",
+    page_title="Is Zaagmans al langs geweest?",
+    page_icon="🪚",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -19,12 +19,12 @@ header {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-# The Week Verdeler HTML code
+# The Week Verdeler HTML code with modifications
 html_code = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Week Verdeler</title>
+    <title>Is Zaagmans al langs geweest?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -221,6 +221,14 @@ html_code = """
             opacity: 0.9;
             z-index: 15;
         }
+        
+        /* Simple character with saw image */
+        .zaagmans-image {
+            display: block;
+            margin: 20px auto;
+            max-width: 300px;
+            height: auto;
+        }
 
         button {
             display: block;
@@ -265,29 +273,6 @@ html_code = """
             border-radius: 8px;
             max-width: 80%;
             box-shadow: 0 2px 6px var(--shadow-color);
-        }
-
-        .explosion {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,0 61,35 97,35 68,57 79,91 50,70 21,91 32,57 3,35 39,35" fill="%23FF7043"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 100;
-            animation: explode 0.5s ease-out;
-            display: none;
-        }
-
-        @keyframes explode {
-            0% { transform: scale(0.1); opacity: 0; }
-            70% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-        
-        @keyframes sawDust {
-            0% { transform: translateY(-5px); opacity: 1; }
-            100% { transform: translateY(50px) rotate(180deg); opacity: 0; }
         }
 
         /* Mobile responsiveness */
@@ -376,13 +361,13 @@ html_code = """
     </style>
 </head>
 <body>
-    <h1>Week Verdeler</h1>
-    <h2 id="current-date">Vandaag is...</h2>
-    <h3 id="week-half">We zijn in de...</h3>
+    <h1>Is Zaagmans al langs geweest?</h1>
+    <h2 id="current-date">Vandaag is Woensdag, 27 Augustus 2025</h2>
+    <h3 id="week-half">We zijn in de Overgangsdag (Woensdag) van de week</h3>
     
-    <div class="countdown" id="countdown">Nog ... dagen tot de volgende verdeling</div>
+    <div class="countdown" id="countdown">Vandaag is de verdeling!</div>
     
-    <div class="announcement" id="wednesday-message"></div>
+    <div class="announcement" id="wednesday-message">Woensdag verdeelt de week in tweeën!</div>
 
     <div class="week-container" id="week-display">
         <div class="divider" id="divider"></div>
@@ -398,11 +383,14 @@ html_code = """
     </div>
 
     <div id="sawdust-container"></div>
-    <div id="explosions"></div>
+    
+    <!-- Simple Zaagmans image -->
+    <img class="zaagmans-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAwIj48ZGVmcz48c3R5bGU+LmNscC0xLC5jbHAtMntmaWxsOiNGRkNDODA7fS5jbHAtMntzdHJva2U6IzVENDAzNztzdHJva2Utd2lkdGg6MnB4O30uaGF0e2ZpbGw6I0ZGRUIzQjt9LmV5ZXtmaWxsOiMwMDA7fS5zYXd7ZmlsbDojQTY5QjlCO30uc2F3LWhhbmRsZXtmaWxsOiM1RDQwMzc7fTwvc3R5bGU+PC9kZWZzPjxjaXJjbGUgY2xhc3M9ImNscC0xIiBjeD0iMTAwIiBjeT0iOTAiIHI9IjQwIi8+PGNpcmNsZSBjbGFzcz0iZXllIiBjeD0iODUiIGN5PSI4MCIgcj0iNSIvPjxjaXJjbGUgY2xhc3M9ImV5ZSIgY3g9IjExNSIgY3k9IjgwIiByPSI1Ii8+PHBhdGggZD0iTTEwMCwxMDVhMTAsMTAgMCAwLDAsMTAsMTB2LTIwYTEwLDEwIDAgMCwwLTEwLDEweiIgLz48cGF0aCBkPSJNNjAsMTIwYzAsNDAsMzAsMzAsNDAsMTB2LTQ1aC04MHY0NWMxMCwyMCw0MCwzMCw0MC0xMHoiIGNsYXNzPSJjbHAtMiIvPjxwYXRoIGQ9Ik0xNDAsMTEwdjI1YzAsMTAsMzAsMTAsNDAsNXYtMzBaIiBjbGFzcz0iY2xwLTIiIC8+PHBhdGggZD0iTTYwLDEzMGw0MCwxMGg0MGw0MC0xMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNUQ0MDM3IiBzdHJva2Utd2lkdGg9IjJweCIvPjxlbGxpcHNlIGNsYXNzPSJoYXQiIGN4PSIxMDAiIGN5PSI0NSIgcng9IjQ1IiByeT0iMTAiLz48cmVjdCBjbGFzcz0iaGF0IiB4PSI3MCIgeT0iNDUiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMCIgLz48cmVjdCBjbGFzcz0ic2F3LWhhbmRsZSIgeD0iMTYwIiB5PSIxMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSI0MCIgcng9IjUiIC8+PHBhdGggY2xhc3M9InNhdyIgZD0iTTE4MCwxMTBsMTAwLDAsMCwyMGwtMTAwLDBabTAsMHYyMG0xMCwtMjB2MjBtMTAsLTIwdjIwbTEwLC0yMHYyMG0xMCwtMjB2MjBtMTAsLTIwdjIwbTEwLC0yMHYyMG0xMCwtMjB2MjBtMTAsLTIwdjIwbTEwLC0yMHYyMCIgc3Ryb2tlPSIjNUQ0MDM3IiBzdHJva2Utd2lkdGg9IjJweCIvPjxwYXRoIGNsYXNzPSJzYXciIGQ9Ik0xODAsMTEwbDE1LC0xMGwxMCwxMGwxMCwtMTBsMTAsMTBsMTAsLTEwbDEwLDEwbDEwLC0xMGwxMCwxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNUQ0MDM3IiBzdHJva2Utd2lkdGg9IjJweCIvPjxwYXRoIGNsYXNzPSJzYXciIGQ9Ik0xODAsMTMwbDE1LDEwbDEwLC0xMGwxMCwxMGwxMCwtMTBsMTAsMTBsMTAsLTEwbDEwLDEwbDEwLC0xMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNUQ0MDM3IiBzdHJva2Utd2lkdGg9IjJweCIvPjwvc3ZnPg==" alt="Zaagmans character with saw">
 
     <button id="divide-btn">Zaag De Week Doormidden!</button>
     <div id="success-message" style="display: none;">
-        Week succesvol in twee helften gezaagd!
+        Zaagmans heeft de week doormidden gezaagd!<br>
+        Je bent nu over de helft van de werkweek!
     </div>
 
     <script>
@@ -410,69 +398,29 @@ html_code = """
         const weekdayNamesDutch = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
         const monthNamesDutch = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
         
-        // Get current date information
-        const today = new Date();
-        const currentWeekday = today.getDay(); // 0 is Sunday, 6 is Saturday
-        
-        // Calculate the start of the week (Sunday)
-        const startOfWeek = new Date(today);
-        startOfWeek.setDate(today.getDate() - today.getDay());
-        
-        // Update date display
-        document.getElementById('current-date').textContent = `Vandaag is ${weekdayNamesDutch[currentWeekday]}, ${today.getDate()} ${monthNamesDutch[today.getMonth()]} ${today.getFullYear()}`;
-        
-        // Determine which half of the week we're in
-        let half;
-        if (currentWeekday < 3) { // Sunday(0), Monday(1), Tuesday(2)
-            half = "Eerste Helft";
-        } else if (currentWeekday === 3) { // Wednesday
-            half = "Overgangsdag (Woensdag)";
-        } else { // Thursday(4), Friday(5), Saturday(6)
-            half = "Tweede Helft";
-        }
-        document.getElementById('week-half').textContent = `We zijn in de ${half} van de week`;
-        
-        // Calculate days until next Wednesday
-        function daysUntilNextWednesday() {
-            let daysUntil = (3 - currentWeekday + 7) % 7;
-            if (daysUntil === 0) daysUntil = 7; // If today is Wednesday, count to next Wednesday
-            return daysUntil;
-        }
-        
-        // Display countdown
-        const daysToWednesday = daysUntilNextWednesday();
-        let countdownText;
-        if (currentWeekday === 3) {
-            countdownText = "Vandaag is de verdeling!";
-        } else if (daysToWednesday === 1) {
-            countdownText = "Nog 1 dag tot de volgende verdeling";
-        } else {
-            countdownText = `Nog ${daysToWednesday} dagen tot de volgende verdeling`;
-        }
-        document.getElementById('countdown').textContent = countdownText;
-        
-        // If it's Wednesday, show special message
-        if (currentWeekday === 3) {
-            document.getElementById('wednesday-message').textContent = "Woensdag verdeelt de week in tweeën!";
-        }
-        
         // Create week display
         const weekDisplay = document.getElementById('week-display');
+        
+        // Hardcoded week with set dates for demonstration
+        const dates = [
+            {day: "Zondag", date: "24 Aug"},
+            {day: "Maandag", date: "25 Aug"},
+            {day: "Dinsdag", date: "26 Aug"},
+            {day: "Woensdag", date: "27 Aug"},
+            {day: "Donderdag", date: "28 Aug"},
+            {day: "Vrijdag", date: "29 Aug"},
+            {day: "Zaterdag", date: "30 Aug"}
+        ];
+        
         for (let i = 0; i < 7; i++) {
-            const dayDate = new Date(startOfWeek);
-            dayDate.setDate(startOfWeek.getDate() + i);
-            
             const dayElement = document.createElement('div');
             dayElement.className = 'day';
             dayElement.id = `day-${i}`;  // Add ID for easier targeting
             
-            // Add appropriate class based on which half and if it's today
-            if (i === currentWeekday) {
-                dayElement.classList.add('today');
-            }
-            
+            // Add appropriate class based on which half
             if (i === 3) { // Wednesday
                 dayElement.classList.add('wednesday');
+                dayElement.classList.add('today');
             } else if (i < 3) { // First half
                 dayElement.classList.add('first-half');
             } else { // Second half
@@ -482,12 +430,12 @@ html_code = """
             // Add day content
             const dayNameElement = document.createElement('div');
             dayNameElement.className = 'day-name';
-            dayNameElement.textContent = weekdayNamesDutch[i];
+            dayNameElement.textContent = dates[i].day;
             dayElement.appendChild(dayNameElement);
             
             const dayDateElement = document.createElement('div');
             dayDateElement.className = 'day-date';
-            dayDateElement.textContent = `${dayDate.getDate()} ${monthNamesDutch[dayDate.getMonth()].substring(0, 3)}`;
+            dayDateElement.textContent = dates[i].date;
             dayElement.appendChild(dayDateElement);
             
             weekDisplay.appendChild(dayElement);
@@ -666,17 +614,15 @@ html_code = """
         // Set up button handler
         document.getElementById('divide-btn').addEventListener('click', animateDivision);
         
-        // Auto-animate if it's Wednesday
-        if (currentWeekday === 3) {
-            setTimeout(animateDivision, 1000);
-        }
+        // Auto-animate on page load
+        setTimeout(animateDivision, 1000);
     </script>
 </body>
 </html>
 """
 
 # Display the HTML app using Streamlit's components
-components.html(html_code, height=700, scrolling=False)
+components.html(html_code, height=750, scrolling=False)
 
 # Optional: Add a small footer
 st.markdown("""
